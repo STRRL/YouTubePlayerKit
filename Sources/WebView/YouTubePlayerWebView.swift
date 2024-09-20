@@ -44,8 +44,18 @@ final class YouTubePlayerWebView: WKWebView {
                 // Initialize WebView Configuration
                 let configuration = WKWebViewConfiguration()
                 #if !os(macOS)
-                // Allows inline media playback
-                configuration.allowsInlineMediaPlayback = true
+                // Don't supress rendering content before everything is in memory.
+                configuration.suppressesIncrementalRendering = false
+                // Disallow inline HTML5 Video playback, as we need to be able to
+                // hook into the AVPlayer to detect whether or not videos are being
+                // played. HTML5 Video Playback makes that impossible.
+                configuration.allowsInlineMediaPlayback = false
+                // Picture in Picture.
+                configuration.allowsPictureInPictureMediaPlayback = false
+                // AirPlay.
+                configuration.allowsAirPlayForMediaPlayback = false
+                // All audiovisual media will require a user gesture to begin playing.
+                configuration.mediaTypesRequiringUserActionForPlayback = .all
                 #endif
                 // Disable text interaction / selection
                 if #available(iOS 14.5, macOS 11.3, visionOS 1.0, *) {
