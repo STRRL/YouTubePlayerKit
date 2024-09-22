@@ -1,6 +1,6 @@
 import Combine
 import Foundation
-
+import WebKit
 // MARK: - YouTubePlayer
 
 /// A YouTubePlayer
@@ -70,6 +70,11 @@ public final class YouTubePlayer: ObservableObject {
             }
         return webView
     }()
+    
+    /// Public getter for the YouTubePlayer WebView
+    public var playerWebView: WKWebView {
+        return webView
+    }
     
     /// The YouTubePlayer WebView Event Subscription
     private var webViewEventSubscription: AnyCancellable?
